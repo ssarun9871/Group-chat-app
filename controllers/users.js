@@ -13,7 +13,8 @@ exports.postAddUsers= (req,res,next)=>{
         await Users.create({
             name:req.body.name,
             email:req.body.email,
-            password: hash
+            password: hash,
+            phone:req.body.phone
          })
          .then(result=> res.json("User added successfully"))
          .catch(err => {
