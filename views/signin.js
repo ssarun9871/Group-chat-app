@@ -50,6 +50,7 @@ axios.post('http://localhost:3000/login',credential)
 .then(res=>{
     error.style.visibility = "hidden";
     localStorage.setItem('token',res.data.token);
+    window.location.href = "./chat.html"; 
     })
 .catch(err=> {
     error.style.visibility = "visible";
