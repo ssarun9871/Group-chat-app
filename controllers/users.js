@@ -46,12 +46,12 @@ exports.postLoginUser = async (req,res,next)=>{
         }
         //if passwords doesn't matches
         else{
-            res.status(400).json({status:"failed", message:"User not authorized"});
+            res.status(401).json({status:"failed", message:"user not authorized"});
         }
         }
 
     //if user doesn't exists in the database    
     else{
-        res.status(404).json({status:"failed" , message:"User not found"});
+        res.status(404).json({status:"failed" , message:"user not found"});
         }
 }
