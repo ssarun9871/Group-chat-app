@@ -46,7 +46,7 @@ event.preventDefault();
         password:password
     }
 
-axios.post('http://13.235.238.48:3000/login',credential)
+axios.post('http://localhost:3000/login',credential)
 .then(res=>{
     error.style.visibility = "hidden";
     localStorage.setItem('token',res.data.token);

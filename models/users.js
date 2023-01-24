@@ -17,15 +17,16 @@ const users = sequelize.define('users',{
         allowNull:false,
         unique:true
     },
+    password:{
+        type:Sequelize.STRING,
+        allowNull:false
+    },
     phone:{
         type:Sequelize.INTEGER,
         allowNull:false,
         unique:true
     },
-    password:{
-        type:Sequelize.STRING,
-        allowNull:false
-    }
+
 
 })
  
