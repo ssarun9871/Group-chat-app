@@ -11,6 +11,11 @@ window.addEventListener('DOMContentLoaded',async ()=>{
    
 })
 
+
+setInterval(async ()=>{   
+const res = await axios.get(`http://localhost:3000/getmessage`,{headers:{"Authorization":token}});
+},1000)
+
 async function addMessage(e){
     e.preventDefault();
     try{
