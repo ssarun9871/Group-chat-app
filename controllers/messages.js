@@ -5,7 +5,8 @@ const { Op } = require("sequelize");
 exports.postAddMessage=async (req,res,next)=>{ 
     await Msg.create({
        userId : req.body.userId,
-       message: req.body.msg
+       message: req.body.msg,
+       groupId:req.body.grpId
     })
     .then(result=> res.json({message:"message added successfully"}))
     .catch(err => res.json({message: "failed"}));
@@ -14,18 +15,20 @@ exports.postAddMessage=async (req,res,next)=>{
 
 // sending id, name and messages of all users 
 exports.getAllMessages = async(req,res,next)=>{
-
-   if(req.params.lastmsgid==undefined){
+ 
+   if(req.body.lastMsgId==undefined){
       lastmsgid=0
    }
    else{
-      lastmsgid=req.params.lastmsgid
+      lastmsgid=req.body.lastMsgId
    }
 
    Msg.findAll({
       //where id is greater than 'lastmsgid'
       where:{
-         id:{[Op.gt]:lastmsgid}
+         groupId:req.body.groupId ,
+         id:{[Op.gt]:lastmsgid},
+         
       },
       
       //it will include the name in result data

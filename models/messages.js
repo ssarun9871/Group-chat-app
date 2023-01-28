@@ -5,6 +5,10 @@ const msg = sequelize.define('messages',{
   message:{
     type:Sequelize.STRING,
     allowNull:false
+  },
+  groupId:{
+    type:Sequelize.STRING,
+    allowNull:false
   }
 })
 

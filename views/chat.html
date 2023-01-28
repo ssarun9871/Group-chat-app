@@ -7,23 +7,79 @@
     
     <link href="http://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <script src="http://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="./chat.css">
     <title>Chat</title>
 </head>
+
+
 <body>
-    <h1 style="text-align: center;">Chat App</h1>
-    <div class="chat_container" style="height: 84vh;padding-left: 10%;padding-right: 10%;">
-        <table class="table table-striped" >
-          <tbody id="display" >
-         
-          </tbody>
-          </table>
-    </div>
-    <footer >
-        <div style="width: 100%;height: 58px;background-color:#71A7C2; width: 100%; display: flex;justify-content: center; padding: 15px;" >
-            <input id="msg" type="text" style="align-self: center; width: 35%;">&nbsp;&nbsp;&nbsp;
-            <button id="send" class="btn btn-secondary btn-sm align-self: center;" style="font-weight: 700;" src="./send1.png">Send</button>
+    <div class="main_container">
+        <!-- group container  -->
+        <div class="data_container" style="display: block;">
+            <h1 style="text-align: center;">Groups</h1>
+          
+            <div class ="group_container">
+                <table class="table table-hover" >
+                    <thead>
+                    </thead>
+                    <tbody id="group_table">
+ 
+                    </tbody>
+                  </table>
+            </div>
+
+            <footer class="group_footer">
+                <div style="height: 58px;background-color: white; display: flex;justify-content: center; padding: 10px;" >
+                    <button class="btn btn-secondary pt-0 pb-0" data-toggle="modal" data-target="#ModalCenter" style="font-weight: 600; height: 35px;">Create new group</button>
+                </div>
+            </footer> 
+
+            <!-- Modal -->
+            <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color:#007fd3;color:white">
+                        <h5 class="modal-title" id="modal_title" style="font-weight: 600;">Create new group</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <span style="margin-left: 2px; font-weight: 600;">Group Name</span>  &nbsp;&nbsp;&nbsp;  
+                        <input type="text"class="form-control" id="groupName" style="width: 70%; margin-top: 6px;" placeholder="Enter group name">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success btn-sm" id="createGroup" data-dismiss="modal">Create</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
         </div>
-    </footer>
+           
+            
+        <!-- chat container    -->
+        <div class="chat_container flex-column  bg-light" >
+            <h1 style="text-align: center;">Chats</h1>
+            
+
+            <div class="chat_box" style="overflow-y:scroll; height:80vh; padding-left:3%;  padding-right: 3%;  margin-top: 25px;">
+            <table class="table table-striped"> <tbody id="display" > </tbody> </table>
+            </div>
+            
+            <footer class="footer">
+       
+            <div style="height: 58px;background-color:#71A7C2; display: flex;justify-content: center; padding: 15px;" >
+            <input id="msg" type="text" style="align-self: center; width: 70%;" placeholder="&nbsp;Message">&nbsp;&nbsp;&nbsp;
+            <button id="send" class="btn btn-secondary btn-sm align-self: center;" style="font-weight: 6    00;" src="./send1.png">Send</button>
+            </div>
+            </footer>
+        </div>
+ 
     
 </body>
 <script src="./chat.js"></script>
