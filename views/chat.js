@@ -9,7 +9,7 @@ document.getElementById('createGroup').addEventListener('click',createGroup);
 window.addEventListener('DOMContentLoaded',async ()=>{
     try{
     localStorage.removeItem('currGroup')
-    const grp = await axios.get(`http://localhost:3000/getgroups`,{headers:{"Authorization":token}});
+    const grp = await axios.get(`http://13.232.149.196:3000/chat/getgroups`,{headers:{"Authorization":token}});
 
     document.getElementById('userName').innerText=`User : ${grp.data.userName}`
     
@@ -39,7 +39,7 @@ async function addMessage(e){
             msg :message,
             grpId:localStorage.getItem('currGroup')
             };
-            await axios.post(`http://localhost:3000/addmessage`, obj,{headers:{"Authorization":token}});
+            await axios.post(`http://13.232.149.196:3000/chat/addmessage`, obj,{headers:{"Authorization":token}});
         }
 
         let msg =`<tr><td>${obj.name} : ${obj.msg}</td></tr>`
@@ -56,7 +56,7 @@ async function addMessage(e){
 //create new group 
 async function createGroup(){
     let name = document.getElementById('groupName');
-    await axios.post('http://localhost:3000/creategroup',{groupName:name.value,admin:true},{headers:{"Authorization":token}})
+    await axios.post('http://13.232.149.196:3000/chat/creategroup',{groupName:name.value,admin:true},{headers:{"Authorization":token}})
     .then(res=>{
         if(res.data.success==true){
             alert('Group created successfully')
@@ -144,7 +144,7 @@ function groupDisplayOnScreen(grpId,grpName,visibility){
 
 //function to display users inside a group 
 async function add(grpId){
-    let res =  await axios.post('http://localhost:3000/getallmembers',{groupId:grpId},{headers:{"Authorization":token}});
+    let res =  await axios.post('http://13.232.149.196:3000/chat/getallmembers',{groupId:grpId},{headers:{"Authorization":token}});
 
     res.data.forEach(user =>{
         let visibility = 'visible';
@@ -164,7 +164,7 @@ async function makeAdmin(grpId,userId){
         grpId:grpId,
         usrId:userId
     }
-    const res = await axios.post(`http://localhost:3000/makeadmin`,obj,{headers:{"Authorization":token}});
+    const res = await axios.post(`http://13.232.149.196:3000/chat/makeadmin`,obj,{headers:{"Authorization":token}});
     location.reload();
 }
 
@@ -175,7 +175,7 @@ async function deleteUser(grpId,userId){
         grpId:grpId,
         usrId:userId
     }
-    const res = await axios.post(`http://localhost:3000/deleteuser`,obj,{headers:{"Authorization":token}});
+    const res = await axios.post(`http://13.232.149.196:3000/chat/deleteuser`,obj,{headers:{"Authorization":token}});
     location.reload();
 }
 
@@ -189,7 +189,7 @@ async function addUserInGroup(grpId){
             groupId:grpId,
         }
 
-        const res = await axios.post(`http://localhost:3000/adduseringroup`,obj,{headers:{"Authorization":token}});
+        const res = await axios.post(`http://13.232.149.196:3000/chat/adduseringroup`,obj,{headers:{"Authorization":token}});
         if(res.data.status==true){
             alert('User added successfully');
             location.reload();
@@ -235,7 +235,7 @@ async function showMessages(groupId){
         }
     
     
-        const res = await axios.post(`http://localhost:3000/getmessage`,obj,{headers:{"Authorization":token}});
+        const res = await axios.post(`http://13.232.149.196:3000/chat/getmessage`,obj,{headers:{"Authorization":token}});
         //If any new msg received from database
         if(res.data!=null){ 
             if( res.data.length!=0){
