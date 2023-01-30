@@ -2,19 +2,28 @@ const Group = require('../models/groups');
 const userGroup = require('../models/user-groups');
 const Users = require('../models/users');
 const groupMember = require('../models/groupMember');
+const { Op } = require("sequelize");
+const { consumers } = require('stream');
 
 
-exports.postAddGroup=async (req,res,next)=>{ 
+exports.postCreateGroup=async (req,res,next)=>{ 
    //adding group name in group table
    await Group.create({
       userId : req.body.userId,
       grp_name: req.body.groupName
    })
+   .then(response=>
+      groupMember.create({ 
+         userId:req.body.userId,
+         groupId:response.id,
+         admin:req.body.admin
+      })
+   )
    .then(result=>
    //adding userId (getting as a result) and groupId in user-group table   
    userGroup.create({
    userId : req.body.userId,
-   groupId : result.id,
+   groupId : result.groupId,
    })
    )
    .then(res.json({success:true,message:"group added successfully"}))
@@ -28,33 +37,30 @@ try{
    //first find the groups created by user
    let arr = [];
    id = req.body.userId;
-
-   Group.findOne({
-      where:{userId:id},
-   })
-   .then(result =>{
-      if(result!=null){
-         arr.push({grpId:result.id,grpName:result.grp_name})
+   let userName = '';
+   
+   Users.findOne({
+      where:{
+         id:id
       }
    })
-
-   //now find the groups in which curr_user is added by other users
-   groupMember.findAll({
+   .then(user=>userName=user.name);
+      groupMember.findAll({
       where:{userId:id},
-      attributes:['groupId'],
+      attributes:['groupId','admin'],
       include:{model:Group}
    }) 
-   .then(result =>{
-      if(result!=null){
+   .then(result =>{  
+      if(result.length!=0 ){
       result.forEach(ele=>{
-      arr.push({grpId:ele.group.id,grpName:ele.group.grp_name});
+      arr.push({grpId: ele.group.id,  grpName: ele.group.grp_name,  admin: ele.admin});
       })
       }
 
       if(arr.length==0){
       res.status(401).json({status:'no group found!'})
       }
-      else{res.status(201).json(arr)}
+      else{res.status(201).json({arr,userName})}
    })
 }
 
@@ -63,14 +69,19 @@ catch{
 }
 }
 
-
+ 
 
 exports.addUserInGroup = async(req,res,next)=>{
    let phone = req.body.phone;
    let groupId = req.body.groupId;
    
    Users.findOne({
-   where:{phone:phone}
+   where:{
+      [Op.or]: [
+      { phone:phone },
+      { email:phone }
+      ]
+   }
    })
    .then(user =>{
       if(user==null){
@@ -79,7 +90,7 @@ exports.addUserInGroup = async(req,res,next)=>{
       else{
          groupMember.create({
          userId:user.id,
-         groupId:groupId
+         groupId:groupId,
          })
          .then(result =>{
          res.status(201).json({status:true,message:'User added in group successfully'})
@@ -87,3 +98,66 @@ exports.addUserInGroup = async(req,res,next)=>{
       }
    })
 } 
+
+
+//to get all the members of the group
+exports.getAllMembersOfGroups = async(req,res,next)=>{
+ let groupId = req.body.groupId;
+ groupMember.findAll({
+   where:{groupId:groupId},
+   // attributes:['userId'],
+   include:{model:Users}
+ })
+.then(data => {
+   let users = []
+
+   data.forEach((ele=>{
+      let obj = {userId:ele.userId,  name:ele.user.name, admin:ele.admin};
+      users.push(obj);
+   }))
+res.json(users)})
+.catch(err=>{
+res.send(err);
+})
+}
+ 
+
+
+//make another user from the group "admin"
+exports.postMakeAdmin = (req,res,next)=>{
+   const userId = req.body.usrId;
+   const groupId = req.body.grpId;
+
+   groupMember.update(
+      {admin:true},
+      {where:{
+         [Op.and]: [
+            { userId:userId },
+            { groupId:groupId }
+            ]}
+      }
+      )
+   .then(result=>{
+      res.json(result);
+   })
+   .catch(err=>res.send(err));
+}
+
+//delete a user from group
+exports.postDeleteUser = (req, res, next)=>{
+   const userId = req.body.usrId;
+   const groupId = req.body.grpId;
+
+   groupMember.destroy({
+      where:{
+         [Op.and]: [
+            { userId:userId },
+            { groupId:groupId }
+            ]
+         }
+   })
+   .then(result=>{
+      res.json(result);
+   })
+   .catch(err=>res.send(err));
+}

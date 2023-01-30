@@ -55,3 +55,13 @@ exports.postLoginUser = async (req,res,next)=>{
         res.status(404).json({status:"failed" , message:"user not found"});
         }
 }
+
+
+exports.getuserName=(req,res,next)=>{
+ Users.findOne({
+    where:{
+        userId:req.body.userId
+    }
+ })
+}
+ 

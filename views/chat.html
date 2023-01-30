@@ -24,22 +24,18 @@
           
             <div class ="group_container">
                 <table class="table table-hover" >
-                    <thead>
-                    </thead>
-                    <tbody id="group_table">
- 
-                    </tbody>
-                  </table>
+                    <tbody id="group_table"> </tbody>
+                </table>
             </div>
 
             <footer class="group_footer">
-                <div style="height: 58px;background-color: white; display: flex;justify-content: center; padding: 10px;" >
-                    <button class="btn btn-secondary pt-0 pb-0" data-toggle="modal" data-target="#ModalCenter" style="font-weight: 600; height: 35px;">Create new group</button>
+                <div style="height: 58px;  background-color:beige; display: flex;justify-content: center; padding: 10px;" >
+                    <button class="btn btn-secondary pt-0 pb-0" id="creatNewGroup" data-toggle="modal" data-target="#create" style="font-weight: 600; height: 35px;">Create new group</button>
                 </div>
             </footer> 
 
             <!-- Modal -->
-            <div class="modal fade" id="ModalCenter" tabindex="-1" role="dialog">
+            <div class="modal fade" id="create" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color:#007fd3;color:white">
@@ -60,11 +56,14 @@
             </div>
 
         </div>
+
+        
            
             
         <!-- chat container    -->
         <div class="chat_container flex-column  bg-light" >
-            <h1 style="text-align: center;">Chats</h1>
+            <div id="userName" class = "userName"></div><br>
+            <h1 style="text-align: center;margin-top: 10px;">Chats</h1>
             
 
             <div class="chat_box" style="overflow-y:scroll; height:80vh; padding-left:3%;  padding-right: 3%;  margin-top: 25px;">

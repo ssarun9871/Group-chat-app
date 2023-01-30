@@ -2,6 +2,11 @@ const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
 const group = sequelize.define('groups',{
+    id:{
+        autoIncrement:true,
+        primaryKey : true,
+        type:Sequelize.INTEGER,
+    },
     grp_name:{
         type:Sequelize.STRING,
         allowNull:false
@@ -12,4 +17,4 @@ const group = sequelize.define('groups',{
     }
 })
 
-module.exports = group
+module.exports = group 

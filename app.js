@@ -35,6 +35,8 @@ Msg.belongsTo(User);
 
 Group.hasMany(groupMember);
 groupMember.belongsTo(Group);
+
+groupMember.belongsTo(User);
    
 //many to many relationship between user and group
 User.belongsToMany(Group,{through:userGroup}) 
@@ -52,7 +54,7 @@ app.use(groupRoutes);
 app.use((req,res)=>{
     res.sendFile(path.join(__dirname,"./",`/views/${req.url}`))
 }) 
-  
+    
 
 sequelize.sync()   
 .then(result=>{

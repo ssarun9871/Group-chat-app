@@ -64,7 +64,6 @@ function signup(event) {
         }
 
     }
-    console.log(validation)
 
     //validation if both the passwords matches
     if (validation == 5) {
@@ -88,7 +87,6 @@ function signup(event) {
         }
 
     if (validation == 7) {
-        console.log("inside 7 "+ validation)
         let success = document.getElementById('registration_successful');
         let already_exist = document.getElementById('already_exist');
 
