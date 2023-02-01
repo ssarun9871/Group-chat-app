@@ -46,9 +46,9 @@ Group.hasMany(userGroup);
 userGroup.belongsTo(Group);
   
 
-app.use('/chat',userRoutes);
-app.use('/chat',msgRoutes);
-app.use('/chat',groupRoutes);
+app.use(userRoutes);
+app.use(msgRoutes);
+app.use(groupRoutes);
 
 app.use((req,res)=>{
     res.sendFile(path.join(__dirname,"./",`/views/${req.url}`))

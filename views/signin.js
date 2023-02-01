@@ -46,7 +46,7 @@ event.preventDefault();
         password:password
     }
 
-axios.post('http://13.232.149.196:3000/chat/login',credential)
+axios.post('http://13.232.149.196:3000/login',credential)
 .then(res=>{
     error.style.visibility = "hidden";
     localStorage.setItem('token',res.data.token);
