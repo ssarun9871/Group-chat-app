@@ -206,7 +206,7 @@ async function addUserInGroup(grpId){
 async function showMessages(groupId){
    
   //to make chat realtime
-  //setInterval(async function(){ },1000)
+  setInterval(async function(){ 
         localStorage.removeItem('messages');
         var child = display.lastElementChild; 
         while (child) {
@@ -258,4 +258,5 @@ async function showMessages(groupId){
             msgDisplayOnScreen();
             }
         }   
+    },1000)
 }

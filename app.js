@@ -12,7 +12,6 @@ const msgRoutes = require('./routes/messages');
 const groupRoutes = require('./routes/groups');
 
 
-
 //tables
 const User = require('./models/users');
 const Msg = require('./models/messages');
@@ -24,7 +23,7 @@ const groupMember = require('./models/groupMember');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors({
-    origin:"http://localhost:3000/"
+    origin:"http://13.232.149.196:3000/"
 })) 
 
 
@@ -47,9 +46,9 @@ Group.hasMany(userGroup);
 userGroup.belongsTo(Group);
   
 
-app.use(userRoutes);
-app.use(msgRoutes);
-app.use(groupRoutes);
+app.use('/chat',userRoutes);
+app.use('/chat',msgRoutes);
+app.use('/chat',groupRoutes);
 
 app.use((req,res)=>{
     res.sendFile(path.join(__dirname,"./",`/views/${req.url}`))
